@@ -16,13 +16,15 @@ class MyClient(discord.Client):
         if message.author.id == self.user.id:
             return
         
+        print(str(message.author.id) + ':' + message.content)
+        
         global dll
         dll=ctypes.windll.LoadLibrary("C:\\Users\\Administrator\\Desktop\\discordbot\\Chieri_main.dll")#引用易语言dll
         manage = dll.message_main
         userid=str(message.author.id)
-        para=ctypes.c_char_p(manage(message.content.encode('gbk'),userid.encode('gbk')))
+        para=ctypes.c_char_p(manage(message.content.encode('gbk'),userid.encode('gbk')))#易语言使用GBK编码
         result=para.value
-        retmsg=str(result,'utf8')
+        retmsg=str(result,'utf8')#Python使用UTF-8编码
 
         if retmsg=='chieri_pass':
             return
@@ -34,8 +36,7 @@ class MyClient(discord.Client):
                 #print(channel)
                 await channel.send(file=discord.File(retmsg[4:]))
 
-        print(str(message.author.id) + ':' + message.content)
-
+       
    
 
 client = MyClient()
