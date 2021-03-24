@@ -39,5 +39,5 @@ class MyClient(discord.Client):
        
    
 
-client = MyClient()
+client = MyClient(proxy="http://127.0.0.1:10087")
 client.run('token')
